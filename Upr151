@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.*;
 import javafx.scene.control.Button;
-
+ 
 public class Upr151 extends Application {
 	final int CARDS_AMOUNT = 52;
 	@Override
