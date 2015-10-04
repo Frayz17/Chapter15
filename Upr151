@@ -56,7 +56,7 @@ public class Upr151 extends Application {
         Collections.shuffle(stackOfIntegers); // shuffle numbers in the stack
 		
 		// Create a three strings from first stackOfIntegers slots for path to cards
-        String firstCard = "image/card/" + stackOfIntegers.get(0) + ".png";
+                String firstCard = "image/card/" + stackOfIntegers.get(0) + ".png";
 		String secondCard = "image/card/" + stackOfIntegers.get(1) + ".png";
 		String thirdCard = "image/card/" + stackOfIntegers.get(2) + ".png";
 		String fouthCard = "image/card/" + stackOfIntegers.get(3) + ".png";
