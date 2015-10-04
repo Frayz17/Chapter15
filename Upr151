@@ -1,0 +1,74 @@
+
+	final int CARDS_AMOUNT = 52;
+	@Override
+	public void start(Stage primaryStage) {
+		// Create a HBox pane for store a cards
+		HBox hBoxCards = new HBox(10);
+		hBoxCards.setPadding(new Insets(15, 15, 15, 15));
+		// Create a second HBox pane for buttons
+	    HBox hBoxBtns = new HBox(10);
+		hBoxBtns.setAlignment(Pos.CENTER);
+		
+		// Create  stack of integers for 52 cards
+		ArrayList<Integer> stackOfIntegers = new ArrayList<>();
+		// call the method which place 4 random cards on the hBoxCards pane
+		refreshCards(stackOfIntegers, hBoxCards);
+			
+		// Create a button for refreshing cards and place it on hBoxBtns
+		Button btRefresh = new Button("Refresh");
+		hBoxBtns.getChildren().add(btRefresh);
+		
+		// Create a BorderPane for place cards on center and buttons on bottom
+		BorderPane borderPane = new BorderPane();
+		borderPane.setCenter(hBoxCards);
+		borderPane.setBottom(hBoxBtns);
+		
+		// Create an event for refreshing cards
+		btRefresh.setOnAction(e -> {
+		    hBoxCards.getChildren().removeAll();
+			refreshCards(stackOfIntegers, hBoxCards);
+		});
+		
+		// Create a scene and place it in the stage
+		Scene scene = new Scene(borderPane);
+		primaryStage.setTitle("Upr143");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}	
+	
+	public void refreshCards (ArrayList<Integer> stackOfIntegers, HBox hBoxCards) {
+		// fulfill the List
+		for (int i = 0; i < CARDS_AMOUNT; i++) {
+			stackOfIntegers.add(i+1);
+		}
+        Collections.shuffle(stackOfIntegers); // shuffle numbers in the stack
+		
+		// Create a three strings from first stackOfIntegers slots for path to cards
+        String firstCard = "image/card/" + stackOfIntegers.get(0) + ".png";
+		String secondCard = "image/card/" + stackOfIntegers.get(1) + ".png";
+		String thirdCard = "image/card/" + stackOfIntegers.get(2) + ".png";
+		String fouthCard = "image/card/" + stackOfIntegers.get(3) + ".png";
+		
+		// Create objects with images and put them on the pane
+		Image firstImageCard = new Image(firstCard.toString());
+		Image secondImageCard = new Image(secondCard);
+		Image thirdImageCard = new Image(thirdCard);
+		Image fourthImageCard = new Image(fouthCard);
+		
+		ImageView firstSlot = new ImageView(firstImageCard);
+		ImageView secondSlot = new ImageView(secondImageCard);
+		ImageView thirdSlot = new ImageView(thirdImageCard);
+		ImageView fourthSlot = new ImageView(fourthImageCard);
+		
+		hBoxCards.getChildren().clear();
+	    
+		hBoxCards.getChildren().add(firstSlot);
+		hBoxCards.getChildren().add(secondSlot);
+		hBoxCards.getChildren().add(thirdSlot);
+		hBoxCards.getChildren().add(fourthSlot);
+		
+	}
+	
+	public static void main(String[] args) {
+       	Application.launch(args);
+    }
