@@ -18,7 +18,7 @@ public class Upr151 extends Application {
 		HBox hBoxCards = new HBox(10);
 		hBoxCards.setPadding(new Insets(15, 15, 15, 15));
 		// Create a second HBox pane for buttons
-	    HBox hBoxBtns = new HBox(10);
+	        HBox hBoxBtns = new HBox(10);
 		hBoxBtns.setAlignment(Pos.CENTER);
 		
 		// Create  stack of integers for 52 cards
