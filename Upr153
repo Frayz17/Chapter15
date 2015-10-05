@@ -3,14 +3,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.util.*;
 import javafx.scene.control.Button;
 
 public class Upr153 extends Application {
@@ -37,11 +33,17 @@ public class Upr153 extends Application {
 		// Create a buttons for move 
 		Button btLeft = new Button("Left");
 		Button btRight = new Button("Right");
-		Button btUP = new Button("UP");
+		Button btUP = new Button("Up");
 		Button btDown = new Button("Down");
 		// place buttons in the pane
 		btPane.getChildren().addAll(btLeft, btRight, btUP, btDown);
 		borderPane.setBottom(btPane);
+		
+		// Create move events for the ball
+		btLeft.setOnAction(e -> moveLeft(ball, pane));
+		btRight.setOnAction(e -> moveRight(ball, pane));
+		btUP.setOnAction(e -> moveUp(ball, pane));
+		btDown.setOnAction(e -> moveDown(ball, pane));
 		
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(borderPane, 250, 250);
@@ -52,20 +54,38 @@ public class Upr153 extends Application {
 	
 	
 	public void moveLeft(Circle ball, Pane pane) {
-		if (ball.getX() >= radius) {
-			ball.setX(ball.getX() - 1);
+		if (ball.getCenterX() > radius) {
+			ball.setCenterX(ball.getCenterX() - 5);
 		}
 		else {
-			ball.setX(ball.getX());
+			ball.setCenterX(ball.getCenterX());
 		}
 	}
 	
-	public void moveRight(Circle ball) {
-		if (ball.getX() <= pane.getProperty() - 25) {
-			ball.setX(ball.getX() - 1);
+	public void moveRight(Circle ball, Pane pane) {
+		if (ball.getCenterX() < pane.getWidth() - radius ) {
+			ball.setCenterX(ball.getCenterX() + 5);
 		}
 		else {
-			ball.setX(ball.getX());
+			ball.setCenterX(ball.getCenterX());
+		}
+	}
+	
+	public void moveUp(Circle ball, Pane pane) {
+		if (ball.getCenterY() > radius) {
+			ball.setCenterY(ball.getCenterY() - 5);
+		}
+		else {
+			ball.setCenterY(ball.getCenterY());
+		}
+	}
+	
+	public void moveDown(Circle ball, Pane pane) {
+		if (ball.getCenterY() < pane.getHeight() - radius ) {
+			ball.setCenterY(ball.getCenterY() + 5);
+		}
+		else {
+			ball.setCenterY(ball.getCenterY());
 		}
 	}
 	
