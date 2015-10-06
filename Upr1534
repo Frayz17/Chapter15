@@ -1,0 +1,105 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.util.*;
+import javafx.scene.control.Button;
+
+public class Upr1534 extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		// Create borderPane for other panes
+		BorderPane borderPane = new BorderPane();
+		borderPane.setPadding(new Insets(10, 10, 10, 10));
+		
+		// Create a pane for lattice
+		Pane pane = new Pane();
+		
+		// Create hBox Pane for button
+		HBox btPane = new HBox();
+		btPane.setAlignment(Pos.CENTER);
+		btPane.setPadding(new Insets(10, 0, 0, 0));
+		
+		// Create Button Start
+		Button btStart = new Button("Start");
+		btPane.getChildren().add(btStart);
+		
+		borderPane.setCenter(pane);
+		borderPane.setBottom(btPane);
+		borderPane.setAlignment(pane, Pos.CENTER);
+		
+		// Create lattice and place it to the pane
+		int[][] coords = new int[2][128];
+		int x1 = 0;
+		int y1 = 0;
+		int x2 = 0;
+		int y2 = 0;
+		int[][] arLattice = new int[16][16];
+		int step = 20;
+		
+		// try to build it
+		for (int i = 0; i < arLattice.length; i++) {
+			for (int j = 0; j < arLattice[i].length; j++) {
+				arLattice[i][j] = j * step;
+				System.out.print(arLattice[i][j] + " ");
+				
+			}
+			System.out.println();
+		}
+		// paint line
+		for (int i = 0; i < arLattice.length+1; i++) {
+			Line horLine = new Line(0, step * i,
+			    step * arLattice.length, step * i);
+			pane.getChildren().add(horLine);
+			
+			Line vertLine = new Line(step * i, 0,
+			    step * i, step * arLattice.length);
+			pane.getChildren().add(vertLine);
+		}
+		
+		// Create event on btStart
+		btStart.setOnAction(e -> walk(pane, step));
+
+		
+		
+		
+		// Create a scene and place it in the stage
+		Scene scene = new Scene(borderPane);
+		primaryStage.setTitle("Upr1534");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void walk(Pane pane, int step) {
+		int x1 = 9;
+		int y1 = 9;
+		int x2 = 9;
+		int y2 = 9;
+		
+		Line pathLine = new Line();
+		System.out.Println
+		
+		
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
