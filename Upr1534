@@ -61,24 +61,61 @@ public class Upr1534 extends Application {
 	}
 	
 	public void walk(Pane pane, int step) {
-		int x1 = 29 * step;
-		int y1 = 29 * step;
-		int x2 = 29 * step;
-		int y2 = 29 * step;
-		ArrayList<Integer> x = new ArrayList<>();
-		ArrayList<Integer> y = new ArrayList<>();
+		// create initial cords in the centre of the lattice
+		int x1 = 8 * step;
+		int y1 = 8 * step;
+		int x2 = 8 * step;
+		int y2 = 8 * step;
 		
-		int random = (int)(Math.random() * 4);;
-		while (x2 >= 0 && y2 >= 0 && x2 <= 3000 && y2 <= 3000) {
-			random = (int)(Math.random() * 4);
+		// Create a two-dimensional array to store cords history
+		int[][] cords = new int[128][2];
+		int pairCount = 0;
+		int xC = 0;
+		int yC = 1;
+		// store initial point
+		cords[pairCount][xC] = x2;
+		cords[pairCount][yC] = y2;
+		pairCount++;
+		
+		// Create steps
+		int up = 0;
+		int down = 2;
+		int left = 3;
+		int right =1; 
+		
+		// is inside of moveFucnt
+		boolean[] inside = new boolean[4];
+		for (int i = 0; i < inside.length; i++) {
+			inside[i] = false;
+		}
+		
+		int random = (int)(Math.random() * 4); // create random number for first step
+		int precedRandom = random;
+		while (x2 >= 0 && y2 >= 0 && x2 <= 300 && y2 <= 300) {
+			
+			if (
+			historyCheck(cords, x2, y2-step, pairCount) == false &&
+			historyCheck(cords, x2+step, y2, pairCount) == false &&
+			historyCheck(cords, x2, y2+step, pairCount) == false &&
+			historyCheck(cords, x2-step, y2, pairCount) == false
+			) {
+				break;
+			}
 			
 			//up
-			if (random == 0) {
-				
-				if (y.contains(y2 - step)) {continue;}
+			if (random == up) {
+				if (historyCheck(cords, x2, y2-step, pairCount) == false){
+					random = randomNumber(random, precedRandom);
+					continue;
+					}
+                inside[up] = true;
 				
 				y2 -= step;
-				y.add(y2);
+
+				// add cords to store
+				cords[pairCount][xC] = x2;
+				cords[pairCount][yC] = y2;
+				pairCount++;
 			    
 				Line pathLine = new Line(x1, y1, x2, y2);
 				pathLine.setStrokeWidth(3);
@@ -86,17 +123,22 @@ public class Upr1534 extends Application {
 				x1 = x2;
 				y1 = y2;
 				
-				random = (int)(Math.random() * 4);
-				while (random == 2) {
-				    random = (int)(Math.random() * 4);
-				}
+				precedRandom = random;
+				random = randomNumber(random, precedRandom);
 			}
 			//right
-			else if (random == 1) {
-				if (x.contains(x2 + step)) {continue;}
+			else if (random == right) {
+				if (historyCheck(cords, x2+step, y2, pairCount) == false) {
+					random = randomNumber(random, precedRandom);
+					continue;
+				}
 				
 				x2 += step;
-				x.add(x2);
+				
+				// add cords to store
+				cords[pairCount][xC] = x2;
+				cords[pairCount][yC] = y2;
+				pairCount++;
 				
 			    Line pathLine = new Line(x1, y1, x2, y2);
 			    pathLine.setStrokeWidth(3);
@@ -104,19 +146,22 @@ public class Upr1534 extends Application {
 			    x1 = x2;
 				y1 = y2;
 				
-				x.add(x2);
-				
-				random = (int)(Math.random() * 4);
-				while (random == 3) {
-				    random = (int)(Math.random() * 4);
-				}
+				precedRandom = random;
+				random = randomNumber(random, precedRandom);
 			}
 			// down
-			else if (random == 2) {
-				if (y.contains(y2 + step)) {continue;}
+			else if (random == down) {
+				if (historyCheck(cords, x2, y2+step, pairCount) == false) {
+					random = randomNumber(random, precedRandom);
+					continue;
+				}
 				
 				y2 += step;
-				y.add(y2);
+				
+				// add cords to store
+				cords[pairCount][xC] = x2;
+				cords[pairCount][yC] = y2;
+				pairCount++;
 				
 			    Line pathLine = new Line(x1, y1, x2, y2);
 			    pathLine.setStrokeWidth(3);
@@ -124,19 +169,23 @@ public class Upr1534 extends Application {
 			    x1 = x2;
 				y1 = y2;
 				
-				y.add(y2);
-				
-				random = (int)(Math.random() * 4);
-				while (random == 0) {
-				    random = (int)(Math.random() * 4);
-				}
+                precedRandom = random;				
+				random = randomNumber(random, precedRandom);
 			}
 			// left
-			else if (random == 3) {
-				if (x.contains(x2 - step)) {continue;}
+			else if (random == left) {
+				if (historyCheck(cords, x2-step, y2, pairCount) == false) {
+					random = randomNumber(random, precedRandom);
+					continue;
+					}
+                inside[left] = true;
 				
 				x2 -= step;
-				x.add(x2);
+				
+				// add cords to store
+				cords[pairCount][xC] = x2;
+				cords[pairCount][yC] = y2;
+				pairCount++;
 				
 			    Line pathLine = new Line(x1, y1, x2, y2);
 			    pathLine.setStrokeWidth(3);
@@ -144,20 +193,63 @@ public class Upr1534 extends Application {
 			    x1 = x2;
 				y1 = y2;
 				
-				x.add(x2);
-				
-				random = (int)(Math.random() * 4);
-				while (random == 1) {
-				    random = (int)(Math.random() * 4);
-				}
+				precedRandom = random;
+				random = randomNumber(random, precedRandom);
 			}
-			else break;
-			
-			
 		}
 		
 		System.out.println((int)(Math.random() * 4));
 		
+	}
+	
+	public int randomNumber(int random, int precedRandom) {
+		int up = 0;
+		int down = 2;
+		int left = 3;
+		int right =1; 
+		
+		if (precedRandom == up) {
+			random = (int)(Math.random() * 4);
+			while (random == down) {
+			    random = (int)(Math.random() * 4);
+			}
+			return random;
+		}
+		
+		else if (precedRandom == right) {
+			random = (int)(Math.random() * 4);
+			while (random == left) {
+			    random = (int)(Math.random() * 4);
+			}
+			return random;
+		}
+		
+		else if (precedRandom == down) {
+			random = (int)(Math.random() * 4);
+			while (random == up) {
+			    random = (int)(Math.random() * 4);
+			}
+			return random;
+		}
+		
+		else if (precedRandom == left) {
+			random = (int)(Math.random() * 4);
+			while (random == right) {
+			    random = (int)(Math.random() * 4);
+			}
+			return random;
+		}
+        
+		else return random;
+	}
+	
+	public boolean historyCheck(int[][] cords, int x2, int y2, int pairCount) {
+		for (int i = 0; i <= pairCount; i++) {
+			if (cords[i][0] == x2 && cords[i][1] == y2) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) {
